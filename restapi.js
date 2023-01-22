@@ -4,7 +4,9 @@ var app = express();
 var mysql= require('mysql');
 var bodyParser = require('body-parser');
 const bcrypt = require("bcrypt")
-const generateAccessToken = require("./generateAccessToken")
+const generateAccessToken = require("./generateAccessToken");
+const request = require('request');
+const auth = require("./middleware/auth");
 
 app.use(express.json())
 
@@ -22,11 +24,6 @@ const db = mysql.createPool({
    database: DB_DATABASE,
    port: DB_PORT
 })
-
-/* connection.connect(function(err) {
-  if (err) throw err
-  console.log('A csatlakozás sikerült...')
-}) */
 
 db.getConnection( (err, connection)=> {
   if (err) throw (err)
@@ -79,14 +76,6 @@ app.post("/createUser", async (req,res) => {
 }) //end of db.getConnection()
 }) //end of app.post()
 
-
-/* //mysql kapcsolat léterhozása
-var connection = mysql.createConnection({
-  host     : 'localhost', 
-  user     : 'root',
-  password : '', 
-  database : 'mynodejsrestdb' 
-});
  
 // body-parser konfiguráció megkezdése
 app.use( bodyParser.json() );       //  JSON-encoded bodies támogatása
@@ -97,93 +86,51 @@ app.use(bodyParser.urlencoded({     // URL-encoded bodies támogatása
 
 //az összes elem lekérése
 
-app.get('/toys', function (req, res) {
-   db.query('select * from toys', function (error, results, fields) {
-	  if (error) throw error;
-		  res.json(results);
-      console.log(results);
-	});
-  console.log(results);
-});
- 
-app.get("/toys/:id", async (req,res) => {
-  db.getConnection( async (err, connection) => {
-    connection.query('select * from toys where id=?', [req.params.id], function (error, results, fields) {
-      if (error) throw error;
-      res.end(JSON.stringify(results));
-	});
-})
-});
-
-
-/* app.get('/toys/:id', function (req, res) {
-     //console.log(req);
-     connection.query('select * from toys where id=?', [req.params.id], function (error, results, fields) {
-	 if (error) throw error;
-	 res.end(JSON.stringify(results));
-	});
-}); */
-
-
-//masik megoldas
-/*
-app.get('/employees/:id',(req, res) => {
-  let sql = "SELECT * FROM employee WHERE id="+req.params.id;
-  console.log(req.params.id);
-  let query = connection.query(sql, (err, results) => {
-    if(err) throw err;
-    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-  });
-});*/
- 
-// body-parser konfiguráció megkezdése
-app.use( bodyParser.json() );       //  JSON-encoded bodies támogatása
-app.use(bodyParser.urlencoded({     // URL-encoded bodies támogatása
-  extended: true
-}));
-//body-parser konfigurációnak vége
 
 var bodyParser = require('express');
+const { Console } = require("console");
+const { json } = require("body-parser");
 
-app.get('/toys', function (req, res) {
+/*   app.get('/toys', function (req, res) {
   db.getConnection( async (err, connection) => {
 
   db.query('select * from toys', function (error, results, fields) {
    if (error) throw error;
      res.json(results);
+     console.log(results.body)
+     console.log(results);
  });
 });
-});
+});   */
 
 app.get("/toys/:id", async (req,res) => {
   db.getConnection( async (err, connection) => {
     connection.query('select * from toys where id=?', [req.params.id], function (error, results, fields) {
       if (error) throw error;
       res.end(JSON.stringify(results));
+  
 	});
 })
 });
 
 //új rekord felvitele az adatbázisba
 
-app.post("/toys", async (req,res) => {
+//app.post("/toys",[auth, verify, async (req,res) => {
+app.post("/toys", auth, async (req,res) => {
   db.getConnection( async (err, connection) => {
       var postData  = req.body;
       connection.query('INSERT INTO toys SET ?', postData, function (error, results, fields) {
        if (error) throw error;
        res.end(JSON.stringify(results));
      });
+     
+     //req.header.arguments;
    });
-  });
+  }
+//]
+  );
 
 
-/*     app.post('/toys', function (req, res) {
-   var postData  = req.body;
-   connection.query('INSERT INTO toys SET ?', postData, function (error, results, fields) {
-	  if (error) throw error;
-	  res.end(JSON.stringify(results));
-	});
-}); */
  
 //meglévő elem frissítése
 app.put("/toys/:id", async (req,res) => {
@@ -226,8 +173,8 @@ app.delete("/toys/:id", async (req,res) => {
 
 //LOGIN (A felhasználó authentikációja és hozzáférési token generálása)
 app.post("/login", (req, res)=> {
-  const felhasznalonev = req.body.felhasznalonev
-  const jelszo = req.body.jelszo
+  const felhasznalonev = req.body.Felhasznalonev
+  const jelszo = req.body.Jelszo
   db.getConnection ( async (err, connection)=> {
    if (err) throw (err)
    const sqlSearch = "Select * from felhasznalok where felhasznalonev = ?"
@@ -261,7 +208,17 @@ app.post("/login", (req, res)=> {
   }) //end of db.connection()
   }) //end of app.post()
 
-  express.post('/get_php_data', function (req, res) {
-    var data = req.body.data;
-    res.send(' Done ');
-});
+
+ app.get('/toys', (req, res) => {
+  request('http://127.0.0.1/gabika/index.php', function (error, response, body) {
+    //console.error('error:', error); 
+    //console.log('statusCode:', response && response.statusCode); 
+    //console.log('body:', body);
+    var jsons = JSON.parse(response.body)
+    //console.log(JSON.parse(response.body))
+    res.json(jsons);
+   })
+})
+ 
+ 
+ 

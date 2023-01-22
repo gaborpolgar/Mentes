@@ -28,3 +28,9 @@ C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált pro
 C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\obj\Debug\restapi3.csproj.CoreCompileInputs.cache
 C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\obj\Debug\restapi3.exe
 C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\obj\Debug\restapi3.pdb
+C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\bin\Debug\restapi3.exe.config
+C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\bin\Debug\restapi3.exe
+C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\bin\Debug\restapi3.pdb
+C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\bin\Debug\RestSharp.dll
+C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\bin\Debug\RestSharp.xml
+C:\Users\orsig\Desktop\EKE PTI FOSZ\3. félév\SZOP szolgáltatásorientált programozás\NodeJS\Mentes\restapi3\restapi3\obj\Debug\restapi3.csproj.CopyComplete
